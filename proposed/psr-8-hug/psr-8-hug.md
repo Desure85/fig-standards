@@ -5,7 +5,6 @@ The key words "MUST", "MUST NOT", "REQUIRED", "SHALL", "SHALL NOT", "SHOULD",
 "SHOULD NOT", "RECOMMENDED", "MAY", and "OPTIONAL" in this document are to be
 interpreted as described in [RFC 2119](http://tools.ietf.org/html/rfc2119).
 
-
 ## 1. Overview
 
 This standard establishes a common way for objects to express mutual
@@ -38,7 +37,6 @@ A common example is to increment an internal happiness or satisfaction counter.
 
 1. An object may optionally implement GroupHuggable to indicate that it is able
 to support and affirm multiple objects at once.
-
 
 ## 3. Interfaces
 
@@ -87,7 +85,7 @@ interface GroupHuggable extends Huggable
    * provided. The order of the collection is not significant, and this object
    * MAY hug each of the objects in any order provided that all are hugged.
    *
-   * @param $huggables
+   * @param Huggable[] $huggables
    *   An array or iterator of objects implementing the Huggable interface.
    */
   public function groupHug($huggables);

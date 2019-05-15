@@ -1,5 +1,4 @@
-Extended Coding Style Guide
-===========================
+# Extended Coding Style Guide
 
 The key words "MUST", "MUST NOT", "REQUIRED", "SHALL", "SHALL NOT", "SHOULD",
 "SHOULD NOT", "RECOMMENDED", "MAY", and "OPTIONAL" in this document are to be
@@ -7,11 +6,10 @@ interpreted as described in [RFC 2119][].
 
 [RFC 2119]: http://tools.ietf.org/html/rfc2119
 
-1. Overview
------------
+## Overview
 
 This specification extends, expands and replaces [PSR-2][], the coding style guide and
-requires adherance to [PSR-1][], the basic coding standard.
+requires adherence to [PSR-1][], the basic coding standard.
 
 Like [PSR-2][], the intent of this specification is to reduce cognitive friction when
 scanning code from different authors. It does so by enumerating a shared set of rules
@@ -23,13 +21,13 @@ all those projects. Thus, the benefit of this guide is not in the rules themselv
 but the sharing of those rules.
 
 [PSR-2][] was accepted in 2012 and since then a number of changes have been made to PHP
-which have implications for coding style guidelines. Whilst [PSR-2] is very comprehensive
+which has implications for coding style guidelines. Whilst [PSR-2] is very comprehensive
 of PHP functionality that existed at the time of writing, new functionality is very
-open to interpretation. This PSR therefore seeks to clarify the content of PSR-2 in
+open to interpretation. This PSR, therefore, seeks to clarify the content of PSR-2 in
 a more modern context with new functionality available, and make the errata to PSR-2
 binding.
 
-### Overview
+### Previous language versions
 
 Throughout this document, any instructions MAY be ignored if they do not exist in versions
 of PHP supported by your project.
@@ -40,15 +38,17 @@ This example encompasses some of the rules below as a quick overview:
 
 ~~~php
 <?php
+
 declare(strict_types=1);
 
 namespace Vendor\Package;
 
-use Vendor\Package\{ClassA as A, ClassB, ClassC as C};
-use Vendor\Package\Namespace\ClassD as D;
+use Vendor\Package\{ClassA as A, ClassB, ClassC as C};
+use Vendor\Package\SomeNamespace\ClassD as D;
 
-use function Vendor\Package\{functionA, functionB, functionC};
-use const Vendor\Package\{ConstantA, ConstantB, ConstantC};
+use function Vendor\Package\{functionA, functionB, functionC};
+
+use const Vendor\Package\{ConstantA, ConstantB, ConstantC};
 
 class Foo extends Bar implements FooInterface
 {
@@ -70,15 +70,14 @@ class Foo extends Bar implements FooInterface
 }
 ~~~
 
-2. General
-----------
+## 2. General
 
 ### 2.1 Basic Coding Standard
 
 Code MUST follow all rules outlined in [PSR-1].
 
 The term 'StudlyCaps' in PSR-1 MUST be interpreted as PascalCase where the first letter of
-each word is capitalised including the very first letter.
+each word is capitalized including the very first letter.
 
 ### 2.2 Files
 
@@ -92,8 +91,7 @@ The closing `?>` tag MUST be omitted from files containing only PHP.
 
 There MUST NOT be a hard limit on line length.
 
-The soft limit on line length MUST be 120 characters; automated style checkers
-MUST warn but MUST NOT error at the soft limit.
+The soft limit on line length MUST be 120 characters.
 
 Lines SHOULD NOT be longer than 80 characters; lines longer than that SHOULD
 be split into multiple subsequent lines of no more than 80 characters each.
@@ -101,7 +99,7 @@ be split into multiple subsequent lines of no more than 80 characters each.
 There MUST NOT be trailing whitespace at the end of lines.
 
 Blank lines MAY be added to improve readability and to indicate related
-blocks of code except where explictly forbidden.
+blocks of code except where explicitly forbidden.
 
 There MUST NOT be more than one statement per line.
 
@@ -112,22 +110,21 @@ tabs for indenting.
 
 ### 2.5 Keywords and Types
 
-PHP [keywords][] MUST be in lower case.
+All PHP reserved keywords and types [[1]][keywords][[2]][types] MUST be in lower case.
 
-The PHP types and keywords `array`, `int`, `true`, `object`, `float`, `false`, `mixed`,
-`bool`, `null`, `numeric`, `string`, `void` and `resource` MUST be in lower case.
+Any new types and keywords added to future PHP versions MUST be in lower case.
 
 Short form of type keywords MUST be used i.e. `bool` instead of `boolean`,
 `int` instead of `integer` etc.
 
-3. Declare Statements, Namespace, and Import Statements
---------------------------------------------
+## 3. Declare Statements, Namespace, and Import Statements
 
 The header of a PHP file may consist of a number of different blocks. If present,
 each of the blocks below MUST be separated by a single blank line, and MUST NOT contain
 a blank line. Each block MUST be in the order listed below, although blocks that are
 not relevant may be omitted.
 
+* Opening `<?php` tag.
 * File-level docblock.
 * One or more declare statements.
 * The namespace declaration of the file.
@@ -138,7 +135,7 @@ not relevant may be omitted.
 
 When a file contains a mix of HTML and PHP, any of the above sections may still
 be used. If so, they MUST be present at the top of the file, even if the
-remainder of the code consists a closing PHP tag and then a mixture of HTML and
+remainder of the code consists of a closing PHP tag and then a mixture of HTML and
 PHP.
 
 When the opening `<?php` tag is on the first line of the file, it MUST be on its
@@ -161,14 +158,14 @@ declare(strict_types=1);
 
 namespace Vendor\Package;
 
-use Vendor\Package\{ClassA as A, ClassB, ClassC as C};
-use Vendor\Package\Namespace\ClassD as D;
-use Vendor\Package\AnotherNamespace\ClassE as E;
+use Vendor\Package\{ClassA as A, ClassB, ClassC as C};
+use Vendor\Package\SomeNamespace\ClassD as D;
+use Vendor\Package\AnotherNamespace\ClassE as E;
 
-use function Vendor\Package\{functionA, functionB, functionC};
-use function Another\Vendor\function D;
+use function Vendor\Package\{functionA, functionB, functionC};
+use function Another\Vendor\functionD;
 
-use const Vendor\Package\{CONSTANT_A, CONSTANT_B, CONSTANT_C};
+use const Vendor\Package\{CONSTANT_A, CONSTANT_B, CONSTANT_C};
 use const Another\Vendor\CONSTANT_D;
 
 /**
@@ -186,7 +183,7 @@ following is the maximum compounding depth allowed:
 ~~~php
 <?php
 
-use Vendor\Package\Namespace\{
+use Vendor\Package\SomeNamespace\{
     SubnamespaceOne\ClassA,
     SubnamespaceOne\ClassB,
     SubnamespaceTwo\ClassY,
@@ -198,7 +195,7 @@ And the following would not be allowed:
 ~~~php
 <?php
 
-use Vendor\Package\Namespace\{
+use Vendor\Package\SomeNamespace\{
     SubnamespaceOne\AnotherNamespace\ClassA,
     SubnamespaceOne\ClassB,
     ClassZ,
@@ -206,8 +203,8 @@ use Vendor\Package\Namespace\{
 ~~~
 
 When wishing to declare strict types in files containing markup outside PHP
-opening and closing tags MUST, on the first line, include an opening php tag,
-the strict types declaration and closing tag.
+opening and closing tags, the declaration MUST be on the first line of the file
+and include an opening PHP tag, the strict types declaration and closing tag.
 
 For example:
 ~~~php
@@ -228,19 +225,18 @@ Block declare statements are allowed and MUST be formatted as below. Note positi
 braces and spacing:
 ~~~php
 declare(ticks=1) {
-    //some code
+    // some code
 }
 ~~~
 
-4. Classes, Properties, and Methods
------------------------------------
+## 4. Classes, Properties, and Methods
 
 The term "class" refers to all classes, interfaces, and traits.
 
 Any closing brace MUST NOT be followed by any comment or statement on the
 same line.
 
-When instantiating a new class, parenthesis MUST always be present even when
+When instantiating a new class, parentheses MUST always be present even when
 there are no arguments passed to the constructor.
 
 ~~~php
@@ -263,6 +259,7 @@ line.
 
 ~~~php
 <?php
+
 namespace Vendor\Package;
 
 use FooClass;
@@ -275,12 +272,14 @@ class ClassName extends ParentClass implements \ArrayAccess, \Countable
 }
 ~~~
 
-Lists of `implements` and `extends` MAY be split across multiple lines, where
-each subsequent line is indented once. When doing so, the first item in the
-list MUST be on the next line, and there MUST be only one interface per line.
+Lists of `implements` and, in the case of interfaces, `extends` MAY be split
+across multiple lines, where each subsequent line is indented once. When doing
+so, the first item in the list MUST be on the next line, and there MUST be only
+one interface per line.
 
 ~~~php
 <?php
+
 namespace Vendor\Package;
 
 use FooClass;
@@ -303,6 +302,7 @@ declared on the next line after the opening brace.
 
 ~~~php
 <?php
+
 namespace Vendor\Package;
 
 use Vendor\Package\FirstTrait;
@@ -313,11 +313,12 @@ class ClassName
 }
 ~~~
 
-Each individual Trait that is imported into a class MUST be included
-one-per-line, and each inclusion MUST have its own `use` import statement.
+Each individual trait that is imported into a class MUST be included
+one-per-line and each inclusion MUST have its own `use` import statement.
 
 ~~~php
 <?php
+
 namespace Vendor\Package;
 
 use Vendor\Package\FirstTrait;
@@ -337,6 +338,7 @@ closing brace MUST be on the next line after the `use` import statement.
 
 ~~~php
 <?php
+
 namespace Vendor\Package;
 
 use Vendor\Package\FirstTrait;
@@ -347,10 +349,11 @@ class ClassName
 }
 ~~~
 
-Otherwise it MUST have a blank line after the `use` import statement.
+Otherwise, it MUST have a blank line after the `use` import statement.
 
 ~~~php
 <?php
+
 namespace Vendor\Package;
 
 use Vendor\Package\FirstTrait;
@@ -364,8 +367,7 @@ class ClassName
 ~~~
 
 When using the `insteadof` and `as` operators they must be used as follows taking
-note of indentation, spacing and new lines.
-
+note of indentation, spacing, and new lines.
 
 ~~~php
 <?php
@@ -395,15 +397,19 @@ Property names MUST NOT be prefixed with a single underscore to indicate
 protected or private visibility. That is, an underscore prefix explicitly has
 no meaning.
 
-A property declaration looks like the following.
+There MUST be a space between type declaration and property name.
+
+A property declaration looks like the following:
 
 ~~~php
 <?php
+
 namespace Vendor\Package;
 
 class ClassName
 {
     public $foo = null;
+    public static int $bar = 0;
 }
 ~~~
 
@@ -415,7 +421,7 @@ Method names MUST NOT be prefixed with a single underscore to indicate
 protected or private visibility. That is, an underscore prefix explicitly has
 no meaning.
 
-Method and function names MUST NOT be declared with a space after the method name. The
+Method and function names MUST NOT be declared with space after the method name. The
 opening brace MUST go on its own line, and the closing brace MUST go on the
 next line following the body. There MUST NOT be a space after the opening
 parenthesis, and there MUST NOT be a space before the closing parenthesis.
@@ -425,6 +431,7 @@ parentheses, commas, spaces, and braces:
 
 ~~~php
 <?php
+
 namespace Vendor\Package;
 
 class ClassName
@@ -448,7 +455,7 @@ function fooBarBaz($arg1, &$arg2, $arg3 = [])
 }
 ~~~
 
-### 4.5 Method and function Arguments
+### 4.5 Method and Function Arguments
 
 In the argument list, there MUST NOT be a space before each comma, and there
 MUST be one space after each comma.
@@ -456,10 +463,9 @@ MUST be one space after each comma.
 Method and function arguments with default values MUST go at the end of the argument
 list.
 
-Method and function argument scalar type hints MUST be lowercase.
-
 ~~~php
 <?php
+
 namespace Vendor\Package;
 
 class ClassName
@@ -481,6 +487,7 @@ between them.
 
 ~~~php
 <?php
+
 namespace Vendor\Package;
 
 class ClassName
@@ -495,13 +502,14 @@ class ClassName
 }
 ~~~
 
-When you have a return type declaration present there MUST be one space after
+When you have a return type declaration present, there MUST be one space after
 the colon followed by the type declaration. The colon and declaration MUST be
-on the same line as the argument list closing parentheses with no spaces between
-the two characters. The declaration keyword (e.g. string) MUST be lowercase.
+on the same line as the argument list closing parenthesis with no spaces between
+the two characters.
 
 ~~~php
 <?php
+
 declare(strict_types=1);
 
 namespace Vendor\Package;
@@ -523,23 +531,47 @@ class ReturnTypeVariations
 }
 ~~~
 
-In nullable type declarations there MUST not be a space between the question mark
+In nullable type declarations, there MUST NOT be a space between the question mark
 and the type.
 
 ~~~php
 <?php
+
 declare(strict_types=1);
 
 namespace Vendor\Package;
 
 class ReturnTypeVariations
 {
-    public function functionName(?string $arg1, ?int $arg2): ?bool
+    public function functionName(?string $arg1, ?int &$arg2): ?string
     {
         return 'foo';
     }
 }
 ~~~
+
+When using the reference operator `&` before an argument, there MUST NOT be
+a space after it, like in the previous example.
+
+There MUST NOT be a space between the variadic three dot operator and the argument
+name:
+
+```php
+public function process(string $algorithm, ...$parts)
+{
+    // processing
+}
+```
+
+When combining both the reference operator and the variadic three dot operator,
+there MUST NOT be any space between the two of them:
+
+```php
+public function process(string $algorithm, &...$parts)
+{
+    // processing
+}
+```
 
 ### 4.6 `abstract`, `final`, and `static`
 
@@ -551,6 +583,7 @@ declaration.
 
 ~~~php
 <?php
+
 namespace Vendor\Package;
 
 abstract class ClassName
@@ -610,8 +643,7 @@ $app->get('/hello/{name}', function ($name) use ($app) {
 });
 ~~~
 
-5. Control Structures
----------------------
+## 5. Control Structures
 
 The general style rules for control structures are as follows:
 
@@ -624,9 +656,8 @@ The general style rules for control structures are as follows:
 - The closing brace MUST be on the next line after the body
 
 The body of each structure MUST be enclosed by braces. This standardizes how
-the structures look, and reduces the likelihood of introducing errors as new
+the structures look and reduces the likelihood of introducing errors as new
 lines get added to the body.
-
 
 ### 5.1 `if`, `elseif`, `else`
 
@@ -649,12 +680,34 @@ if ($expr1) {
 The keyword `elseif` SHOULD be used instead of `else if` so that all control
 keywords look like single words.
 
+Expressions in parentheses MAY be split across multiple lines, where each
+subsequent line is indented at least once. When doing so, the first condition
+MUST be on the next line. The closing parenthesis and opening brace MUST be
+placed together on their own line with one space between them. Boolean
+operators between conditions MUST always be at the beginning or at the end of
+the line, not a mix of both.
+
+~~~php
+<?php
+
+if (
+    $expr1
+    && $expr2
+) {
+    // if body
+} elseif (
+    $expr3
+    && $expr4
+) {
+    // elseif body
+}
+~~~
 
 ### 5.2 `switch`, `case`
 
 A `switch` structure looks like the following. Note the placement of
 parentheses, spaces, and braces. The `case` statement MUST be indented once
-from `switch`, and the `break` keyword (or other terminating keyword) MUST be
+from `switch`, and the `break` keyword (or other terminating keywords) MUST be
 indented at the same level as the `case` body. There MUST be a comment such as
 `// no break` when fall-through is intentional in a non-empty `case` body.
 
@@ -679,6 +732,23 @@ switch ($expr) {
 }
 ~~~
 
+Expressions in parentheses MAY be split across multiple lines, where each
+subsequent line is indented at least once. When doing so, the first condition
+MUST be on the next line. The closing parenthesis and opening brace MUST be
+placed together on their own line with one space between them. Boolean
+operators between conditions MUST always be at the beginning or at the end of
+the line, not a mix of both.
+
+~~~php
+<?php
+
+switch (
+    $expr1
+    && $expr2
+) {
+    // structure body
+}
+~~~
 
 ### 5.3 `while`, `do while`
 
@@ -689,6 +759,24 @@ parentheses, spaces, and braces.
 <?php
 
 while ($expr) {
+    // structure body
+}
+~~~
+
+Expressions in parentheses MAY be split across multiple lines, where each
+subsequent line is indented at least once. When doing so, the first condition
+MUST be on the next line. The closing parenthesis and opening brace MUST be
+placed together on their own line with one space between them. Boolean
+operators between conditions MUST always be at the beginning or at the end of
+the line, not a mix of both.
+
+~~~php
+<?php
+
+while (
+    $expr1
+    && $expr2
+) {
     // structure body
 }
 ~~~
@@ -704,6 +792,22 @@ do {
 } while ($expr);
 ~~~
 
+Expressions in parentheses MAY be split across multiple lines, where each
+subsequent line is indented at least once. When doing so, the first condition
+MUST be on the next line. Boolean operators between conditions MUST
+always be at the beginning or at the end of the line, not a mix of both.
+
+~~~php
+<?php
+
+do {
+    // structure body;
+} while (
+    $expr1
+    && $expr2
+);
+~~~
+
 ### 5.4 `for`
 
 A `for` statement looks like the following. Note the placement of parentheses,
@@ -713,6 +817,23 @@ spaces, and braces.
 <?php
 
 for ($i = 0; $i < 10; $i++) {
+    // for body
+}
+~~~
+
+Expressions in parentheses MAY be split across multiple lines, where each
+subsequent line is indented at least once. When doing so, the first expression
+MUST be on the next line. The closing parenthesis and opening brace MUST be
+placed together on their own line with one space between them.
+
+~~~php
+<?php
+
+for (
+    $i = 0;
+    $i < 10;
+    $i++
+) {
     // for body
 }
 ~~~
@@ -749,13 +870,16 @@ try {
 }
 ~~~
 
-6. Operators
------------
-All binary and ternary (but not unary) operators MUST be preceded and followed by at least
-one space. This includes all [arithmetic][], [comparison][], [assignment][], [bitwise][],
-[logical][] (excluding `!` which is unary), [string concatenation][], [type][] operators,
-trait operators (`insteadof` and `as`), and the single pipe operator (e.g.
-`ExceptionType1 | ExceptionType2 $e`).
+## 6. Operators
+
+All binary and ternary operators MUST be preceded and followed by at least
+one space; multiple spaces MAY be used for readability purpose. This includes all [arithmetic][],
+[comparison][], [assignment][], [bitwise][], [logical][] (excluding `!` which is unary),
+[string concatenation][], [type][] operators, trait operators (`insteadof` and `as`),
+and the single pipe operator (e.g. `ExceptionType1 | ExceptionType2 $e`).
+
+There MUST NOT be any whitespace between the increment/decrement operators and the variable 
+being incremented/decremented.
 
 Other operators are left undefined.
 
@@ -771,8 +895,7 @@ if ($a === $b) {
 }
 ~~~
 
-7. Closures
------------
+## 7. Closures
 
 Closures MUST be declared with a space after the `function` keyword, and a
 space before and after the `use` keyword.
@@ -790,6 +913,10 @@ comma, and there MUST be one space after each comma.
 Closure arguments with default values MUST go at the end of the argument
 list.
 
+If a return type is present, it MUST follow the same rules as with normal
+functions and methods; if the `use` keyword is present, the colon MUST follow
+the `use` list closing parentheses with no spaces between the two characters.
+
 A closure declaration looks like the following. Note the placement of
 parentheses, commas, spaces, and braces:
 
@@ -801,6 +928,10 @@ $closureWithArgs = function ($arg1, $arg2) {
 };
 
 $closureWithArgsAndVars = function ($arg1, $arg2) use ($var1, $var2) {
+    // body
+};
+
+$closureWithArgsVarsAndReturn = function ($arg1, $arg2) use ($var1, $var2): bool {
     // body
 };
 ~~~
@@ -880,12 +1011,10 @@ $foo->bar(
 );
 ~~~
 
-8. Anonymous Classes
---------------------
+## 8. Anonymous Classes
 
 Anonymous Classes MUST follow the same guidelines and principles as closures
 in the above section.
-
 
 ~~~php
 <?php
@@ -893,20 +1022,20 @@ in the above section.
 $instance = new class {};
 ~~~
 
-The opening parenthesis MAY be on the same line as the `class` keyword so long as
+The opening brace MAY be on the same line as the `class` keyword so long as
 the list of `implements` interfaces does not wrap. If the list of interfaces
-wraps, the parenthesis MUST be placed on the line immediately following the last
+wraps, the brace MUST be placed on the line immediately following the last
 interface.
 
 ~~~php
 <?php
 
-// Parenthesis on the same line
+// Brace on the same line
 $instance = new class extends \Foo implements \HandleableInterface {
     // Class content
 };
 
-// Parenthesis on the next line
+// Brace on the next line
 $instance = new class extends \Foo implements
     \ArrayAccess,
     \Countable,
@@ -916,9 +1045,18 @@ $instance = new class extends \Foo implements
 };
 ~~~
 
+## 9. Type Casting
+
+There MUST NOT be any spaces inside the type casting parentheses:
+
+~~~php
+$intValue = (int) $input;
+~~~
+
 [PSR-1]: http://www.php-fig.org/psr/psr-1/
 [PSR-2]: http://www.php-fig.org/psr/psr-2/
 [keywords]: http://php.net/manual/en/reserved.keywords.php
+[types]: https://secure.php.net/manual/en/reserved.other-reserved-words.php
 [arithmetic]: http://php.net/manual/en/language.operators.arithmetic.php
 [assignment]: http://php.net/manual/en/language.operators.assignment.php
 [comparison]: http://php.net/manual/en/language.operators.comparison.php
